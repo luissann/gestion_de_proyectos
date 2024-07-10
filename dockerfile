@@ -1,22 +1,23 @@
 FROM jenkins/jenkins:lts
 
-# Instalar Python y actualizar pip
+# Instala Python y pip usando apt
 USER root
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    python3 -m pip install --upgrade pip
+    apt-get install -y python3 python3-venv
 
-# Copiar el contenido del proyecto al contenedor
-# Asegúrate de ajustar el directorio de tu proyecto si es diferente
+# Crea y activa un entorno virtual
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+# Copia el contenido del proyecto al contenedor
 COPY . /app
 WORKDIR /app
 
-# Instalar las dependencias del proyecto
+# Instala las dependencias del proyecto dentro del entorno virtual
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Cambiar al usuario jenkins
+# Cambia al usuario jenkins
 USER jenkins
 
 # Comando por defecto para ejecutar la aplicación
-# Ajusta según sea necesario para tu proyecto
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
