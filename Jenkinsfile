@@ -1,48 +1,35 @@
 pipeline {
-    agent any
-    
-    environment {
-        // Define el nombre de la herramienta de Python configurada en Jenkins
-        PYTHON_VERSION = 'Python3.12.3'
-    }
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+    agent {
+        docker {
+            image 'ubuntu:latest'
+            label '' // Puedes especificar un label si es necesario
+            registryUrl '' // Dejar en blanco para DockerHub público
         }
-        
+    }
+    stages {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Utiliza la herramienta de Python configurada en Jenkins
-                    def pythonHome = tool name: "${env.PYTHON_VERSION}", type: 'hudson.plugins.python.PythonInstallation'
-                    echo "Python ejecutable encontrado en: ${pythonHome}"
-                    sh "${pythonHome}/bin/python -m pip install -r requirements.txt"
+                    sh """
+                    apt-get update
+                    apt-get install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev curl libbz2-dev
+                    """
                 }
             }
         }
-        
-        stage('Run Tests') {
+        stage('Download Python') {
             steps {
-                // Ejecuta tus pruebas aquí, por ejemplo:
-                sh "pytest"
-            }
-        }
-        
-        stage('Build and Deploy') {
-            steps {
-                echo 'Construyendo y desplegando la aplicación...'
-            }
-        }
-        
-        stage('Final') {
-            steps {
-                echo "¡Hola Mundo!"
+                script {
+                    sh """
+                    curl -O https://www.python.org/ftp/python/3.12.3/Python-3.12.3.tgz
+                    tar -xvf Python-3.12.3.tgz
+                    cd Python-3.12.3
+                    ./configure --enable-optimizations
+                    make -j 8
+                    make altinstall
+                    """
+                }
             }
         }
     }
-    
-    // Puedes manejar acciones posteriores o manejar errores aquí
 }
