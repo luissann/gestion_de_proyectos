@@ -12,14 +12,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias...'
-                sh '/usr/local/bin/python3 -m pip install package1 package2'
+                bat '"C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install package1 package2'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Ejecutando pruebas...'
-                sh '/usr/local/bin/python3 manage.py test'
+                bat '"C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" manage.py test'
             }
         }
 
