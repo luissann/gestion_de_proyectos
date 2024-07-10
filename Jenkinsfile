@@ -30,8 +30,7 @@ pipeline {
         
         stage('Build and Deploy') {
             steps {
-                // Aquí podrías incluir los pasos de construcción y despliegue específicos
-                // según lo que necesites, como construir tu aplicación Angular o cualquier otro paso necesario.
+                echo 'Construyendo y desplegando la aplicación...'
             }
         }
         
