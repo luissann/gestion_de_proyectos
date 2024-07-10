@@ -15,8 +15,11 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                echo 'Instalando dependencias...'
-                sh "${env.PYTHON_EXECUTABLE} -m pip install -r requirements.txt"
+                script {
+                    def pythonExecutable = bat(script: 'where python', returnStdout: true).trim()
+                    echo "Python executable found at: ${pythonExecutable}"
+                    sh "${pythonExecutable} -m pip install -r requirements.txt"
+                }
             }
         }
 
