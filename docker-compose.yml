@@ -8,19 +8,6 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=1
-  
-  jenkins:
-    image: jenkins/jenkins:lts
-    ports: 
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-    
-  selenium:
-    image: selenium/standalone-chrome
-    ports:
-      - "4444:4444"
 
   mysql:
     image: mysql:latest
@@ -34,5 +21,4 @@ services:
       - mysql_data:/var/lib/mysql
 
 volumes:
-  jenkins_home:
   mysql_data:

@@ -16,8 +16,5 @@ WORKDIR /app
 # Instala las dependencias del proyecto dentro del entorno virtual
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Cambia al usuario jenkins
-USER jenkins
-
 # Comando por defecto para ejecutar la aplicación
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
