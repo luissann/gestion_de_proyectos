@@ -1,6 +1,11 @@
 pipeline {
     agent any
     
+    environment {
+        PYTHON_EXECUTABLE = "${tool name: 'python', type: 'hudson.plugins.python.PythonInstallation'}/bin/python3"
+        NODEJS_HOME = "${tool name: 'nodejs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'}/bin"
+    }
+    
     stages {
         stage('Checkout') {
             steps {
@@ -11,25 +16,22 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    def pythonExecutable = sh(returnStdout: true).trim()
+                    def pythonExecutable = "${env.PYTHON_EXECUTABLE}"
                     echo "Python executable found at: ${pythonExecutable}"
                     sh "${pythonExecutable} -m pip install -r requirements.txt"
                 }
             }
         }
         
-        // Agrega más etapas según sea necesario
-        
         stage('Run Tests') {
             steps {
-                // Ejemplo de ejecución de pruebas
                 sh "pytest"
             }
         }
         
         stage('Build and Deploy') {
             steps {
-                // Ejemplo de construcción y despliegue
+                sh "npm install"  // Ensure npm packages are installed
                 sh "npm run build"
                 sh "npm run deploy"
             }
@@ -37,11 +39,10 @@ pipeline {
         
         stage('Final') {
             steps {
-                // Etapa final
                 echo "Pipeline finished"
             }
         }
     }
     
-    // Opcionalmente, puedes definir post-actions o manejo de errores aquí
+    // Optional: Handle post-actions or error handling here
 }
