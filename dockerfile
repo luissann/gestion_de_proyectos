@@ -1,20 +1,18 @@
-# Usar una imagen base oficial de Python
 FROM python:3.10-slim
 
-# Establecer el directorio de trabajo en el contenedor
+# Actualizar pip
+RUN python -m ensurepip --upgrade && \
+    pip install --no-cache --upgrade pip
+
+# Instalar dependencias adicionales si es necesario
+# RUN apt-get update && apt-get install -y <additional-packages>
+
+# Copiar el contenido del proyecto al contenedor
+COPY . /app
 WORKDIR /app
 
-# Copiar los archivos de requisitos y el script de entrada
-COPY requirements.txt /app/
-
-# Instalar las dependencias
+# Instalar las dependencias del proyecto
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el código fuente del proyecto en el contenedor
-COPY . /app
-
-# Exponer el puerto 8000
-EXPOSE 8000
-
-# Definir el comando de inicio del contenedor
+# Comando por defecto para ejecutar la aplicación
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
