@@ -12,21 +12,21 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias...'
-                bat '"C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install -r requirements.txt'
+                sh '/usr/bin/python3 -m pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Ejecutando pruebas...'
-                bat '"C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" manage.py test'
+                sh '/usr/bin/python3 manage.py test'
             }
         }
 
         stage('Build and Deploy') {
             steps {
                 echo 'Construyendo y desplegando la aplicación...'
-                // Aquí puedes incluir comandos para construir y desplegar tu aplicación si es necesario
+                // Agrega aquí comandos para construir y desplegar tu aplicación si es necesario
             }
         }
 
