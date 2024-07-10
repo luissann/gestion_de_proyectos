@@ -1,12 +1,18 @@
 pipeline {
-    agent {
-        docker {
-            image 'ubuntu:latest'
-            label '' // Puedes especificar un label si es necesario
-            registryUrl '' // Dejar en blanco para DockerHub público
-        }
+    agent any
+    
+    environment {
+        // Define el nombre de la herramienta de Python configurada en Jenkins
+        PYTHON_VERSION = 'Python3.12.3'
     }
+    
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Install Dependencies') {
             steps {
                 script {
@@ -31,5 +37,26 @@ pipeline {
                 }
             }
         }
+        
+        stage('Run Tests') {
+            steps {
+                // Ejecuta tus pruebas aquí, por ejemplo:
+                sh "pytest"
+            }
+        }
+        
+        stage('Build and Deploy') {
+            steps {
+                echo 'Construyendo y desplegando la aplicación...'
+            }
+        }
+        
+        stage('Final') {
+            steps {
+                echo "¡Hola Mundo!"
+            }
+        }
     }
+    
+    // Puedes manejar acciones posteriores o manejar errores aquí
 }
