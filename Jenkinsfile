@@ -1,47 +1,47 @@
 pipeline {
     agent any
-
-    environment {
-        PYTHON_EXECUTABLE = "C:/Users/luisd/AppData/Local/Programs/Python/Python312/python.exe"
-    }
-
+    
     stages {
         stage('Checkout') {
             steps {
-                echo 'Obteniendo el código del repositorio...'
-                git credentialsId: '2d157467-0cf7-4109-9bcc-56c35b34e353', url: 'https://github.com/luissann/gestion_de_proyectos.git', branch: 'main'
+                checkout scm
             }
         }
-
+        
         stage('Install Dependencies') {
             steps {
                 script {
-                    def pythonExecutable = bat(script: 'where python', returnStdout: true).trim()
+                    def pythonExecutable = sh(script: 'which python3', returnStdout: true).trim()
                     echo "Python executable found at: ${pythonExecutable}"
                     sh "${pythonExecutable} -m pip install -r requirements.txt"
                 }
             }
         }
-
+        
+        // Agrega más etapas según sea necesario
+        
         stage('Run Tests') {
             steps {
-                echo 'Ejecutando pruebas...'
-                sh "${env.PYTHON_EXECUTABLE} manage.py test"
+                // Ejemplo de ejecución de pruebas
+                sh "pytest"
             }
         }
-
+        
         stage('Build and Deploy') {
             steps {
-                echo 'Construyendo y desplegando la aplicación...'
-                // Aquí puedes incluir comandos para construir y desplegar tu aplicación si es necesario
+                // Ejemplo de construcción y despliegue
+                sh "npm run build"
+                sh "npm run deploy"
             }
         }
-
+        
         stage('Final') {
             steps {
-                echo '¡Hola mundo!'
-                // En esta etapa final, muestra el mensaje "¡Hola mundo!".
+                // Etapa final
+                echo "Pipeline finished"
             }
         }
     }
+    
+    // Opcionalmente, puedes definir post-actions o manejo de errores aquí
 }
