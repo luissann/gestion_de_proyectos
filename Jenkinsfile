@@ -39,7 +39,7 @@ pipeline {
         
         stage('Final') {
             steps {
-                echo "Pipeline finished"
+                echo "Hola Mundo"
             }
         }
     }
