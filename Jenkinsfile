@@ -30,16 +30,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            echo 'Limpieza final...'
-        }
-        success {
-            echo 'Pipeline ejecutada con éxito'
-        }
-        failure {
-            echo 'Pipeline fallida'
-        }
-    }
 }
