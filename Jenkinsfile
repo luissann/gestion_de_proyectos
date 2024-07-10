@@ -41,6 +41,10 @@ pipeline {
                     apt-get update
                     apt-get install -y docker.io
                     '''
+                    // Loguearse en Docker (si es necesario)
+                    withDockerRegistry(credentialsId: 'docker-credentials', url: 'https://index.docker.io/v1/') {
+                        sh 'docker login -u luissann -p ********'
+                    }
                 }
             }
         }
