@@ -13,17 +13,17 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    // Ejecuta como root dentro del contenedor Docker
-                    sh '''
-                    apt-get update
-                    apt-get install -y sudo build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev curl libbz2-dev
-                    '''
-                }
-            }
-        }
+        // stage('Install Dependencies') {
+        //     steps {
+        //         script {
+        //             // Ejecuta como root dentro del contenedor Docker
+        //             sh '''
+        //             apt-get update
+        //             apt-get install -y sudo build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev curl libbz2-dev
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Setup Docker Environment') {
             agent {
