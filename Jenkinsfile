@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         IMAGE = "web"
+        DOCKERFILE_PATH = "gps/dockerfile"
         SSH_USER = 'ec2-user' // Reemplaza con el nombre de usuario correctoo
         SSH_HOST = 'ec2-18-216-248-159.us-east-2.compute.amazonaws.com' // Reemplaza con la IP o el hostname de la instancia de aplicación
     }
@@ -17,7 +18,7 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    docker.build(IMAGE, '-f dockerfile')
+                    docker.build(IMAGE, "-f ${DOCKERFILE_PATH}")
                 }
             }
         }
