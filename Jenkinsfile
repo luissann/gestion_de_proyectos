@@ -7,6 +7,7 @@ pipeline {
         MYSQL_DATABASE = 'mydatabase'
         MYSQL_USER = 'user'
         MYSQL_PASSWORD = 'password'
+        PATH = "C:/Users/luisd/AppData/Local/Programs/Python/Python312/Scripts:$PATH"
     }
 
     stages {
