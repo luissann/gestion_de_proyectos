@@ -9,29 +9,17 @@ pipeline {
             }
         }
 
-        stage('Check Python Version') {
-            steps {
-                bat '''
-                "C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" --version
-                '''
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias...'
-                bat '''
-                "C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install -r requirements.txt
-                '''
+                sh '/usr/local/bin/python3 -m pip install package1 package2'
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Ejecutando pruebas...'
-                bat '''
-                "C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" manage.py test
-                '''
+                sh '/usr/local/bin/python3 manage.py test'
             }
         }
 
@@ -45,6 +33,7 @@ pipeline {
         stage('Final') {
             steps {
                 echo '¡Hola mundo!'
+                // En esta etapa final, muestra el mensaje "¡Hola mundo!".
             }
         }
     }
