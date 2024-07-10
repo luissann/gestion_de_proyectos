@@ -30,6 +30,7 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} << EOF
                     cd gps/gestion_de_proyectos
                     git fetch
+                    git stash
                     git pull
                     docker-compose down
                     docker-compose build
