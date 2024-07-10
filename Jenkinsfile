@@ -11,8 +11,8 @@ pipeline {
 
         stage('Check Python Version') {
             steps {
-                sh '''
-                /usr/bin/python3 --version
+                bat '''
+                "C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" --version
                 '''
             }
         }
@@ -20,8 +20,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias...'
-                sh '''
-                /usr/bin/python3 -m pip install -r requirements.txt
+                bat '''
+                "C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" -m pip install -r requirements.txt
                 '''
             }
         }
@@ -29,8 +29,8 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo 'Ejecutando pruebas...'
-                sh '''
-                /usr/bin/python3 manage.py test
+                bat '''
+                "C:\\Users\\luisd\\AppData\\Local\\Programs\\Python\\Python312\\python.exe" manage.py test
                 '''
             }
         }
