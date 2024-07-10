@@ -1,4 +1,5 @@
 FROM python:3.10-slim
+FROM jenkins/jenkins:lts
 
 # Actualizar pip
 RUN python -m ensurepip --upgrade && \
