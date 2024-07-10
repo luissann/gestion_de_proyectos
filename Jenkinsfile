@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define la versión de Python configurada en Jenkins
-        PYTHON_VERSION = 'Python3.12.3'
+        PYTHON_VERSION = '3.12.3'
     }
 
     stages {
@@ -16,6 +16,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
+                    // Ejecuta como root dentro del contenedor Docker
                     sh '''
                     apt-get update
                     apt-get install -y sudo build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev curl libbz2-dev
