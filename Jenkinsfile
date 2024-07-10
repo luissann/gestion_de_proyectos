@@ -1,63 +1,50 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'my-docker-image'
-        MYSQL_ROOT_PASSWORD = 'rootpassword'
-        MYSQL_DATABASE = 'mydatabase'
-        MYSQL_USER = 'user'
-        MYSQL_PASSWORD = 'password'
-        PATH = "C:/Users/luisd/AppData/Local/Programs/Python/Python312/Scripts:$PATH"
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 echo 'Obteniendo el código del repositorio...'
-                git 'https://github.com/luissann/gestion_de_proyectos.git'
+                git credentialsId: '2d157467-0cf7-4109-9bcc-56c35b34e353', url: 'https://github.com/luissann/gestion_de_proyectos.git', branch: 'main'
             }
         }
 
-        stage('Build') {
+        stage('Check Python Version') {
             steps {
-                echo 'Construyendo la imagen Docker...'
-                script {
-                    docker.withServer('tcp://docker-host:2376') {
-                        def customImage = docker.build("${DOCKER_IMAGE}:${env.BUILD_NUMBER}")
-                        customImage.push()
-                    }
-                }
+                sh '''
+                /usr/bin/python3 --version
+                '''
             }
         }
 
-        stage('Test') {
+        stage('Install Dependencies') {
+            steps {
+                echo 'Instalando dependencias...'
+                sh '''
+                /usr/bin/python3 -m pip install -r requirements.txt
+                '''
+            }
+        }
+
+        stage('Run Tests') {
             steps {
                 echo 'Ejecutando pruebas...'
-                script {
-                    docker.withServer('tcp://docker-host:2376') {
-                        docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").inside {
-                            sh 'python manage.py test'
-                        }
-                    }
-                }
+                sh '''
+                /usr/bin/python3 manage.py test
+                '''
             }
         }
 
-        stage('Deploy') {
+        stage('Build and Deploy') {
             steps {
-                echo 'Desplegando la aplicación...'
-                script {
-                    docker.withServer('tcp://docker-host:2376') {
-                        docker.image("${DOCKER_IMAGE}:${env.BUILD_NUMBER}").run("-p 8080:8080 --name my-container -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_USER=${MYSQL_USER} -e MYSQL_PASSWORD=${MYSQL_PASSWORD}")
-                    }
-                }
+                echo 'Construyendo y desplegando la aplicación...'
+                // Aquí puedes incluir comandos para construir y desplegar tu aplicación si es necesario
             }
         }
 
         stage('Final') {
             steps {
                 echo '¡Hola mundo!'
-                // En esta etapa final, muestra el mensaje "Hola mundo".
             }
         }
     }
