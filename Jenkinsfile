@@ -3,7 +3,6 @@ pipeline {
     
     environment {
         PYTHON_EXECUTABLE = "${tool name: 'python', type: 'hudson.plugins.python.PythonInstallation'}/bin/python3"
-        NODEJS_HOME = "${tool name: 'nodejs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'}/bin"
     }
     
     stages {
@@ -31,9 +30,8 @@ pipeline {
         
         stage('Build and Deploy') {
             steps {
-                sh "npm install"  // Ensure npm packages are installed
-                sh "npm run build"
-                sh "npm run deploy"
+                // Aquí podrías incluir los pasos de construcción y despliegue específicos
+                // según lo que necesites, como construir tu aplicación Angular o cualquier otro paso necesario.
             }
         }
         
@@ -44,5 +42,5 @@ pipeline {
         }
     }
     
-    // Optional: Handle post-actions or error handling here
+    // Opcionalmente, puedes manejar acciones posteriores o manejo de errores aquí
 }
