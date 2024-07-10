@@ -2,7 +2,8 @@ pipeline {
     agent any
     
     environment {
-        PYTHON_EXECUTABLE = "${tool name: 'python', type: 'hudson.plugins.python.PythonInstallation'}/bin/python3"
+        // Define el nombre de la herramienta de Python configurada en Jenkins
+        PYTHON_VERSION = 'Python3.12.0'
     }
     
     stages {
@@ -15,22 +16,24 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    def pythonExecutable = "${env.PYTHON_EXECUTABLE}"
+                    // Utiliza la herramienta de Python configurada en Jenkins
+                    def pythonExecutable = tool name: "${env.PYTHON_VERSION}", type: 'hudson.plugins.python.PythonInstallation'
                     echo "Python executable found at: ${pythonExecutable}"
-                    sh "${pythonExecutable} -m pip install -r requirements.txt"
+                    sh "${pythonExecutable}/bin/python -m pip install -r requirements.txt"
                 }
             }
         }
         
         stage('Run Tests') {
             steps {
+                // Ejecuta tus pruebas aquí, por ejemplo:
                 sh "pytest"
             }
         }
         
         stage('Build and Deploy') {
             steps {
-                echo 'Construyendo y desplegando la aplicación...'
+                 echo 'Construyendo y desplegando la aplicación...'
             }
         }
         
@@ -41,5 +44,5 @@ pipeline {
         }
     }
     
-    // Opcionalmente, puedes manejar acciones posteriores o manejo de errores aquí
+    // Puedes manejar acciones posteriores o manejo de errores aquí
 }
