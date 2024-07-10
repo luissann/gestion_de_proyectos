@@ -11,14 +11,13 @@ pipeline {
         stage('Setup Docker Environment') {
             agent {
                 docker {
-                    image 'ubuntu:latest' // Especifica la imagen de Docker que necesitas
+                    image 'ubuntu:latest'
                     args '-u root' // Opciones adicionales, si es necesario
                 }
             }
             steps {
                 script {
-                    // Puedes ejecutar comandos dentro del contenedor Docker aquí
-                    sh 'docker info' // Ejemplo de comando para verificar la conexión a Docker
+                    sh 'docker info' // Comando para verificar la conexión a Docker
                 }
             }
         }
