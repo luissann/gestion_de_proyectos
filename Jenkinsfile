@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON_EXECUTABLE = "C:/Users/luisd/AppData/Local/Programs/Python/Python312/python.exe"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -12,21 +16,21 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo 'Instalando dependencias...'
-                sh '/usr/bin/python3 -m pip install -r requirements.txt'
+                sh "${env.PYTHON_EXECUTABLE} -m pip install -r requirements.txt"
             }
         }
 
         stage('Run Tests') {
             steps {
                 echo 'Ejecutando pruebas...'
-                sh '/usr/bin/python3 manage.py test'
+                sh "${env.PYTHON_EXECUTABLE} manage.py test"
             }
         }
 
         stage('Build and Deploy') {
             steps {
                 echo 'Construyendo y desplegando la aplicación...'
-                // Agrega aquí comandos para construir y desplegar tu aplicación si es necesario
+                // Aquí puedes incluir comandos para construir y desplegar tu aplicación si es necesario
             }
         }
 
