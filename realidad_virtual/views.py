@@ -1,10 +1,5 @@
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+from django.shortcuts import render
 
-@csrf_exempt
-def github_webhook(request):
-    if request.method == 'POST':
-        # Maneja la solicitud del webhook aquí
-        return JsonResponse({'status': 'success'})
-    else:
-        return JsonResponse({'status': 'failed'}, status=400)
+def index(request):
+    return HttpResponse("¡Hola Mundo!")
