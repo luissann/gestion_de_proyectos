@@ -11,7 +11,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    def pythonExecutable = sh(script: 'which python3', returnStdout: true).trim()
+                    def pythonExecutable = sh(returnStdout: true).trim()
                     echo "Python executable found at: ${pythonExecutable}"
                     sh "${pythonExecutable} -m pip install -r requirements.txt"
                 }
