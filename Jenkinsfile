@@ -40,6 +40,21 @@ EOF
             }
         }
 
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(['ec2-user']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ec2-user@ec2-18-216-248-159.us-east-2.compute.amazonaws.com << EOF
+                    cd gps/gestion_de_proyectos
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                    EOF
+                    '''
+                }
+            }
+        }
+
         stage('Run Tests') {
             steps {
                 sshagent(['78299390-90dc-4ac8-8c27-73328ee68d4f']) {
