@@ -4,8 +4,8 @@ pipeline {
     environment {
         IMAGE = "web"
         DOCKERFILE_PATH = "/var/lib/jenkins/workspace/gps/dockerfile"
-        SSH_USER = 'ec2-user' // Reemplaza con el nombre de usuario correctoo
-        SSH_HOST = 'ec2-18-216-248-159.us-east-2.compute.amazonaws.com' // Reemplaza con la IP o el hostname de la instancia de aplicación
+        SSH_USER = 'ec2-user'
+        SSH_HOST = 'ec2-18-216-248-159.us-east-2.compute.amazonaws.com' 
     }
 
     stages {
