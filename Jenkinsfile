@@ -40,6 +40,20 @@ EOF
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                sshagent(['78299390-90dc-4ac8-8c27-73328ee68d4f']) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} << EOF
+                    cd gps/gestion_de_proyectos
+                    source venv/bin/activate
+                    python3.9 manage.py test
+EOF
+                    """
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 sshagent(['78299390-90dc-4ac8-8c27-73328ee68d4f']) {
