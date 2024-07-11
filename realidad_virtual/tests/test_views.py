@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 class IndexViewTests(TestCase):
     def test_index_view(self):
-        url = reverse('index')  # Asegúrate de que 'index' sea el nombre correcto de la vista
+        url = reverse('index')  
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         
